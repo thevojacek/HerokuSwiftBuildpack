@@ -10,6 +10,11 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
+# TODO: check STACK version
+STACK="$ENV_DIR/STACK"
+
+echo $STACK
+
 # Language versions specification
 SWIFT_VERSION="4.2.1"
 C_LANG_VERSION="7.0.0"
@@ -17,8 +22,6 @@ C_LANG_VERSION="7.0.0"
 # Downloads URLs
 SWIFT_URL="https://swift.org/builds/swift-$SWIFT_VERSION-release/ubuntu1804/swift-$SWIFT_VERSION-RELEASE/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz"
 C_LANG_URL="http://llvm.org/releases/$C_LANG_VERSION/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz"
-
-# TODO: DOWNLOAD CLANG AND SWIFT ONLY WHEN THEY DO NOT EXIST
 
 # Install Clang
 echo "-----> Installing Clang $C_LANG_VERSION"
@@ -33,7 +36,7 @@ if ! [ -d "$CACHE_DIR/vendor/clang/bin" ]; then
     rm -f clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz
 fi
 
-export PATH=$CACHE_DIR/vendor/clang/bin:"${PATH}"
+set-env PATH "$CACHE_DIR/vendor/clang/bin:$PATH"
 echo "-----> Clang installed"
 
 # export PATH
@@ -51,7 +54,7 @@ if ! [ -d "$CACHE_DIR/vendor/swift/usr/bin" ]; then
     rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
 fi
 
-export PATH=$CACHE_DIR/vendor/swift/usr/bin:"${PATH}"
+set-env PATH "$CACHE_DIR/vendor/swift/usr/bin:$PATH"
 echo "-----> Swift installed"
 
 # Build application
@@ -61,8 +64,7 @@ swift build -c release --build-path $BUILD_DIR/build
 mv $BUILD_DIR/build/release/* $BUILD_DIR
 rm -rf $BUILD_DIR/build/*
 
-pwd
-ls -la
+set-env PATH "$BUILD_DIR:$PATH"
 
 echo "-----> Application built successfully"
 

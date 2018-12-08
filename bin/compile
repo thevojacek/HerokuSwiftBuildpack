@@ -29,6 +29,9 @@ echo "CACHE: $CACHE_DIR"
 # Empty cache
 rm -rf "$CACHE_DIR/vendor"
 
+# Install libicu
+apt-get install libicu55
+
 # Install Clang
 echo "-----> Installing Clang $C_LANG_VERSION"
 cd $CACHE_DIR

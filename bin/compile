@@ -22,30 +22,38 @@ C_LANG_URL="http://llvm.org/releases/$C_LANG_VERSION/clang+llvm-$C_LANG_VERSION-
 
 # Install Clang
 echo "-----> Installing Clang $C_LANG_VERSION"
-cd $CACHE_DIR
-wget --quiet $C_LANG_URL
-mkdir -p vendor/clang
-tar -C vendor/clang -xvf clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz
-mv vendor/clang/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04/* vendor/clang
-rmdir vendor/clang/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04
-rm -f clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz
 
-export PATH=$CACHE_DIR/vendor/clang/bin:"${PATH}"
+if ! [ -x "$(command -v clang)" ]; then
+    cd $CACHE_DIR
+    wget --quiet $C_LANG_URL
+    mkdir -p vendor/clang
+    tar -C vendor/clang -xvf clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz
+    mv vendor/clang/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04/* vendor/clang
+    rmdir vendor/clang/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04
+    rm -f clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz
+
+    export PATH=$CACHE_DIR/vendor/clang/bin:"${PATH}"
+fi
+
 echo "-----> Clang installed"
 
 # export PATH
 
 # Install Swift
 echo "-----> Installing Swift $SWIFT_VERSION"
-cd $CACHE_DIR
-wget --quiet $SWIFT_URL
-mkdir -p vendor/swift
-tar -C vendor/swift -xvf swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
-mv vendor/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04/* vendor/swift
-rmdir vendor/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04
-rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
 
-export PATH=$CACHE_DIR/vendor/swift/usr/bin:"${PATH}"
+if ! [ -x "$(command -v swift)" ]; then
+    cd $CACHE_DIR
+    wget --quiet $SWIFT_URL
+    mkdir -p vendor/swift
+    tar -C vendor/swift -xvf swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
+    mv vendor/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04/* vendor/swift
+    rmdir vendor/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04
+    rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
+
+    export PATH=$CACHE_DIR/vendor/swift/usr/bin:"${PATH}"
+fi
+
 echo "-----> Swift installed"
 
 # Build application

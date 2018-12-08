@@ -10,12 +10,6 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
-cd $ENV_DIR
-ls -la
-# TODO: check STACK version
-# STACK="$(cat $ENV_DIR/STACK)"
-# echo $STACK
-
 # Language versions specification
 SWIFT_VERSION="4.2.1"
 C_LANG_VERSION="7.0.0"
@@ -55,18 +49,24 @@ if ! [ -d "$CACHE_DIR/swift-lib/swift/usr/bin" ]; then
     rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
 fi
 
+# TODO: copy *.so files to build directory after build as well!!!!!!!!!!!!!!!! from build folder
+cd $BUILD_DIR
+mkdir -p .swift-lib
+cp $CACHE_DIR/swift-lib/swift/usr/lib/swift/linux/*.so $BUILD_DIR/.swift-lib
+
 export PATH=$CACHE_DIR/swift-lib/swift/usr/bin:"${PATH}"
+export LD_LIBRARY_PATH=$BUILD_DIR/.swift-lib:"${LD_LIBRARY_PATH}"
 echo "-----> Swift installed"
 
 # Build application
 echo "-----> Building application"
 cd $BUILD_DIR
 swift build -c release --build-path $BUILD_DIR/build
+find "$BUILD_DIR/build/release" -name '*.so' -type f -exec cp {} $BUILD_DIR/.swift-lib \;
 mv $BUILD_DIR/build/release/* $BUILD_DIR
 rm -rf $BUILD_DIR/build
 
-echo "CACHE:"
-echo $CACHE_DIR
+# TODO: delete unncessary files (no binaries and folders)
 
 echo "-----> Application built successfully"
 

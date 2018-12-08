@@ -24,7 +24,7 @@ C_LANG_URL="http://llvm.org/releases/$C_LANG_VERSION/clang+llvm-$C_LANG_VERSION-
 clang --version
 echo "-----> Installing Clang $C_LANG_VERSION"
 
-if ! [ -x "$(command -v clang)" ]; then
+if ! [ -d "$CACHE_DIR/vendor/clang/bin" ]; then
     cd $CACHE_DIR
     wget --quiet $C_LANG_URL
     mkdir -p vendor/clang
@@ -32,10 +32,9 @@ if ! [ -x "$(command -v clang)" ]; then
     mv vendor/clang/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04/* vendor/clang
     rmdir vendor/clang/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04
     rm -f clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz
-
-    export PATH=$CACHE_DIR/vendor/clang/bin:"${PATH}"
 fi
 
+export PATH=$CACHE_DIR/vendor/clang/bin:"${PATH}"
 echo "-----> Clang installed"
 
 # export PATH
@@ -43,7 +42,7 @@ echo "-----> Clang installed"
 # Install Swift
 echo "-----> Installing Swift $SWIFT_VERSION"
 
-if ! [ -x "$(command -v swift)" ]; then
+if ! [ -d "$CACHE_DIR/vendor/swift/bin" ]; then
     cd $CACHE_DIR
     wget --quiet $SWIFT_URL
     mkdir -p vendor/swift
@@ -51,10 +50,9 @@ if ! [ -x "$(command -v swift)" ]; then
     mv vendor/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04/* vendor/swift
     rmdir vendor/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04
     rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
-
-    export PATH=$CACHE_DIR/vendor/swift/usr/bin:"${PATH}"
 fi
 
+export PATH=$CACHE_DIR/vendor/swift/usr/bin:"${PATH}"
 echo "-----> Swift installed"
 
 # Build application

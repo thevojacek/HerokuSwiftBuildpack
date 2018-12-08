@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir>
+
+BUILD_DIR=$1
+
+if [ -f BUILD_DIR/Package.swift ]; then
+    echo "Swift application detected. Using Swift buildpack."
+    exit 0
+else
+    exit 1
+fi

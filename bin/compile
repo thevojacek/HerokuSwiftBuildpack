@@ -55,7 +55,7 @@ mkdir -p .swift-lib
 cp $CACHE_DIR/swift-lib/swift/usr/lib/swift/linux/*.so $BUILD_DIR/.swift-lib
 
 export PATH=$CACHE_DIR/swift-lib/swift/usr/bin:"${PATH}"
-export LD_LIBRARY_PATH=$HOME/.swift-lib:"${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH=$HOME/.swift-lib:$BUILD_DIR/.swift-lib
 echo "-----> Swift installed"
 
 # Build application

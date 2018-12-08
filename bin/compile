@@ -61,7 +61,7 @@ echo "-----> Swift installed"
 # Build application
 echo "-----> Building application"
 cd $BUILD_DIR
-swift build -c release --build-path -Xlinker -L"$HOME/.swift-lib" $BUILD_DIR/build
+swift build -c release --build-path $BUILD_DIR/build -Xlinker -L"$HOME/.swift-lib"
 find "$BUILD_DIR/build/release" -name '*.so' -type f -exec cp {} $BUILD_DIR/.swift-lib \;
 mv $BUILD_DIR/build/release/* $BUILD_DIR
 rm -rf $BUILD_DIR/build

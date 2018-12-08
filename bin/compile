@@ -30,7 +30,7 @@ echo "CACHE: $CACHE_DIR"
 rm -rf "$CACHE_DIR/vendor"
 
 # Install libicu
-apt-get install libicu55
+apt-get install libicu52
 
 # Install Clang
 echo "-----> Installing Clang $C_LANG_VERSION"

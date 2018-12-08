@@ -55,13 +55,13 @@ mkdir -p .swift-lib
 cp $CACHE_DIR/swift-lib/swift/usr/lib/swift/linux/*.so $BUILD_DIR/.swift-lib
 
 export PATH=$CACHE_DIR/swift-lib/swift/usr/bin:"${PATH}"
-export LD_LIBRARY_PATH=$HOME/.swift-lib:$BUILD_DIR/.swift-lib
+export LD_LIBRARY_PATH=$HOME/.swift-lib
 echo "-----> Swift installed"
 
 # Build application
 echo "-----> Building application"
 cd $BUILD_DIR
-swift build -c release --build-path $BUILD_DIR/build
+swift build -c release --build-path -Xlinker $HOME/.swift-lib $BUILD_DIR/build
 find "$BUILD_DIR/build/release" -name '*.so' -type f -exec cp {} $BUILD_DIR/.swift-lib \;
 mv $BUILD_DIR/build/release/* $BUILD_DIR
 rm -rf $BUILD_DIR/build

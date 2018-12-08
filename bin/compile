@@ -38,7 +38,6 @@ echo "-----> Clang installed"
 
 # Install Swift
 echo "-----> Installing Swift $SWIFT_VERSION"
-export LD_LIBRARY_PATH=$BUILD_DIR/.swift-lib:"${LD_LIBRARY_PATH}"
 
 if ! [ -d "$CACHE_DIR/swift-lib/swift/usr/bin" ]; then
     cd $CACHE_DIR
@@ -56,6 +55,7 @@ mkdir -p .swift-lib
 cp $CACHE_DIR/swift-lib/swift/usr/lib/swift/linux/*.so $BUILD_DIR/.swift-lib
 
 export PATH=$CACHE_DIR/swift-lib/swift/usr/bin:"${PATH}"
+export LD_LIBRARY_PATH=$HOME/.swift-lib:"${LD_LIBRARY_PATH}"
 echo "-----> Swift installed"
 
 # Build application

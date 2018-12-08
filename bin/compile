@@ -36,7 +36,7 @@ if ! [ -d "$CACHE_DIR/vendor/clang/bin" ]; then
     rm -f clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz
 fi
 
-set-env PATH "$CACHE_DIR/vendor/clang/bin:$PATH"
+export PATH=$CACHE_DIR/vendor/clang/bin:"${PATH}"
 echo "-----> Clang installed"
 
 # export PATH
@@ -54,7 +54,7 @@ if ! [ -d "$CACHE_DIR/vendor/swift/usr/bin" ]; then
     rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
 fi
 
-set-env PATH "$CACHE_DIR/vendor/swift/usr/bin:$PATH"
+export PATH=$CACHE_DIR/vendor/swift/usr/bin:"${PATH}"
 echo "-----> Swift installed"
 
 # Build application
@@ -64,7 +64,7 @@ swift build -c release --build-path $BUILD_DIR/build
 mv $BUILD_DIR/build/release/* $BUILD_DIR
 rm -rf $BUILD_DIR/build/*
 
-set-env PATH "$BUILD_DIR:$PATH"
+export PATH=$BUILD_DIR:"${PATH}"
 
 echo "-----> Application built successfully"
 

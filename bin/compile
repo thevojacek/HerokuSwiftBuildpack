@@ -54,5 +54,9 @@ cd $BUILD_DIR
 swift build -c release --build-path $BUILD_DIR/build
 mv $BUILD_DIR/build/release/* $BUILD_DIR
 rm -rf $BUILD_DIR/build/*
+
+pwd
+ls -la
+
 echo "-----> Application built successfully"
 

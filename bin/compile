@@ -12,7 +12,7 @@ ENV_DIR=$3
 
 # Language versions specification
 SWIFT_VERSION="4.2.1"
-C_LANG_VERSION="3.7.1"
+C_LANG_VERSION="7.0.0"
 
 # Downloads URLs
 SWIFT_URL="https://swift.org/builds/swift-$SWIFT_VERSION-release/ubuntu1404/swift-$SWIFT_VERSION-RELEASE/swift-$SWIFT_VERSION-RELEASE-ubuntu14.04.tar.gz"

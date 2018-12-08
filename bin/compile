@@ -63,7 +63,7 @@ echo "-----> Building application"
 cd $BUILD_DIR
 swift build -c release --build-path $BUILD_DIR/build
 mv $BUILD_DIR/build/release/* $BUILD_DIR
-rm -rf $BUILD_DIR/build/*
+rm -rf $BUILD_DIR/build
 
 export PATH=$BUILD_DIR/ServerService:"${PATH}"
 

@@ -10,10 +10,11 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
+cd $ENV_DIR
+ls -la
 # TODO: check STACK version
-STACK="$(cat $ENV_DIR/STACK)"
-
-echo $STACK
+# STACK="$(cat $ENV_DIR/STACK)"
+# echo $STACK
 
 # Language versions specification
 SWIFT_VERSION="4.2.1"

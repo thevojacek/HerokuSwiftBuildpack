@@ -20,20 +20,6 @@ C_LANG_URL="http://llvm.org/releases/$C_LANG_VERSION/clang+llvm-$C_LANG_VERSION-
 
 # TODO: DOWNLOAD CLANG AND SWIFT ONLY WHEN THEY DO NOT EXIST
 
-# Creates a caching directory
-# mkdir -p "$CACHE_DIR"
-
-echo "BUILD: $BUILD_DIR"
-echo "CACHE: $CACHE_DIR"
-
-# Empty cache
-rm -rf "$CACHE_DIR/vendor"
-
-# Determine OS version
-cat /etc/os-release
-
-exit 1
-
 # Install Clang
 echo "-----> Installing Clang $C_LANG_VERSION"
 cd $CACHE_DIR

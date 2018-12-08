@@ -39,22 +39,22 @@ echo "-----> Clang installed"
 # Install Swift
 echo "-----> Installing Swift $SWIFT_VERSION"
 
-if ! [ -d "$CACHE_DIR/swift-lib/swift/usr/bin" ]; then
-    cd $CACHE_DIR
+if ! [ -d "$BUILD_DIR/.swift-lib/swift/usr/bin" ]; then
+    cd $BUILD_DIR
     wget --quiet $SWIFT_URL
-    mkdir -p swift-lib/swift
-    tar -C swift-lib/swift -xvf swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
-    mv swift-lib/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04/* swift-lib/swift
-    rmdir swift-lib/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04
+    mkdir -p .swift-lib/swift
+    tar -C .swift-lib/swift -xvf swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
+    mv .swift-lib/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04/* .swift-lib/swift
+    rmdir .swift-lib/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04
     rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
 fi
 
 # TODO: copy *.so files to build directory after build as well!!!!!!!!!!!!!!!! from build folder
 cd $BUILD_DIR
-mkdir -p .swift-lib
-cp $CACHE_DIR/swift-lib/swift/usr/lib/swift/linux/*.so $BUILD_DIR/.swift-lib
+mkdir -p ..swift-lib
+cp $BUILD_DIR/.swift-lib/swift/usr/lib/swift/linux/*.so $BUILD_DIR/.swift-lib
 
-export PATH=$CACHE_DIR/swift-lib/swift/usr/bin:"${PATH}"
+export PATH=$BUILD_DIR/.swift-lib/swift/usr/bin:"${PATH}"
 export LD_LIBRARY_PATH=$HOME/.swift-lib
 echo "-----> Swift installed"
 

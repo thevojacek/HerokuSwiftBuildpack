@@ -21,7 +21,6 @@ C_LANG_URL="http://llvm.org/releases/$C_LANG_VERSION/clang+llvm-$C_LANG_VERSION-
 # TODO: DOWNLOAD CLANG AND SWIFT ONLY WHEN THEY DO NOT EXIST
 
 # Install Clang
-clang --version
 echo "-----> Installing Clang $C_LANG_VERSION"
 
 if ! [ -d "$CACHE_DIR/vendor/clang/bin" ]; then

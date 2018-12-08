@@ -21,11 +21,14 @@ C_LANG_URL="http://llvm.org/releases/$C_LANG_VERSION/clang+llvm-$C_LANG_VERSION-
 # TODO: DOWNLOAD CLANG AND SWIFT ONLY WHEN THEY DO NOT EXIST
 
 # Creates a caching directory
-mkdir -p "$CACHE_DIR"
+# mkdir -p "$CACHE_DIR"
+
+echo "BUILD: $BUILD_DIR"
+echo "CACHE: $CACHE_DIR"
 
 # Install Clang
 echo "-----> Installing Clang $C_LANG_VERSION"
-cd $BUILD_DIR
+cd $CACHE_DIR
 wget --quiet $C_LANG_URL
 mkdir -p vendor/clang
 tar -C vendor/clang -xvf clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-14.04.tar.xz
@@ -42,7 +45,7 @@ clang --version
 
 # Install Swift
 echo "-----> Installing Swift $SWIFT_VERSION"
-cd $BUILD_DIR
+cd $CACHE_DIR
 wget --quiet $SWIFT_URL
 mkdir -p vendor/swift
 tar -C vendor/swift -xvf swift-$SWIFT_VERSION-RELEASE-ubuntu14.04.tar.gz

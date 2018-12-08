@@ -57,6 +57,6 @@ echo "-----> Building application"
 cd $BUILD_DIR
 swift build -c release --build-path $BUILD_DIR/build
 mv $BUILD_DIR/build/release/* $BUILD_DIR
-rmdir $BUILD_DIR/build/release/
+rm -rf $BUILD_DIR/build/*
 echo "-----> Application built successfully"
 

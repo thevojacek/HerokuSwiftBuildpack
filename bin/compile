@@ -11,7 +11,7 @@ CACHE_DIR=$2
 ENV_DIR=$3
 
 # TODO: check STACK version
-STACK="$ENV_DIR/STACK"
+STACK="$(cat $ENV_DIR/STACK)"
 
 echo $STACK
 
@@ -64,7 +64,7 @@ swift build -c release --build-path $BUILD_DIR/build
 mv $BUILD_DIR/build/release/* $BUILD_DIR
 rm -rf $BUILD_DIR/build/*
 
-export PATH=$BUILD_DIR:"${PATH}"
+export PATH=$BUILD_DIR/ServerService:"${PATH}"
 
 echo "-----> Application built successfully"
 

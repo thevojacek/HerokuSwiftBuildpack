@@ -29,9 +29,10 @@ echo "CACHE: $CACHE_DIR"
 # Empty cache
 rm -rf "$CACHE_DIR/vendor"
 
-# Install libicu
-apt-get update
-apt-get install libicu52
+# Determine OS version
+hostnamectl
+
+exit 1
 
 # Install Clang
 echo "-----> Installing Clang $C_LANG_VERSION"

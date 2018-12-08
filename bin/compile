@@ -36,6 +36,8 @@ rm -f clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-14.04.tar.xz
 export PATH=$BUILD_DIR/vendor/clang/bin:"${PATH}"
 echo "-----> Clang installed"
 
+clang --version
+
 # export PATH
 
 # Install Swift
@@ -50,6 +52,8 @@ rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu14.04.tar.gz
 
 export PATH=$BUILD_DIR/vendor/swift/usr/bin:"${PATH}"
 echo "-----> Swift installed"
+
+swift --version
 
 # Build application
 echo "-----> Building application"

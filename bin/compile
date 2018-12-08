@@ -30,6 +30,7 @@ echo "CACHE: $CACHE_DIR"
 rm -rf "$CACHE_DIR/vendor"
 
 # Install libicu
+apt-get update
 apt-get install libicu52
 
 # Install Clang

@@ -30,7 +30,7 @@ echo "CACHE: $CACHE_DIR"
 rm -rf "$CACHE_DIR/vendor"
 
 # Determine OS version
-hostnamectl
+cat /etc/os-release
 
 exit 1
 

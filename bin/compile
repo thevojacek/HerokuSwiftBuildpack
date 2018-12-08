@@ -12,7 +12,7 @@ ENV_DIR=$3
 
 # Language versions specification
 SWIFT_VERSION="4.2.1"
-C_LANG_VERSION="3.7.0"
+C_LANG_VERSION="3.7.1"
 
 # Downloads URLs
 SWIFT_URL="https://swift.org/builds/swift-$SWIFT_VERSION-release/ubuntu1404/swift-$SWIFT_VERSION-RELEASE/swift-$SWIFT_VERSION-RELEASE-ubuntu14.04.tar.gz"
@@ -22,9 +22,9 @@ C_LANG_URL="http://llvm.org/releases/$C_LANG_VERSION/clang+llvm-$C_LANG_VERSION-
 mkdir -p "$CACHE_DIR"
 
 # Install Clang
-echo "Installing Clang $C_LANG_VERSION"
+echo "-----> Installing Clang $C_LANG_VERSION"
 cd $BUILD_DIR
-curl $C_LANG_URL -s -O
+curl $C_LANG_URL -O
 mkdir -p vendor/clang
 tar -C vendor/clang -xvf clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-14.04.tar.xz
 mv vendor/clang/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-14.04/* vendor/clang
@@ -32,14 +32,14 @@ rmdir vendor/clang/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-14.04
 rm -f clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-14.04.tar.xz
 
 export PATH=$BUILD_DIR/vendor/clang/bin:"${PATH}"
-echo "Clang installed"
+echo "-----> Clang installed"
 
 # export PATH
 
 # Install Swift
-echo "Installing Swift $SWIFT_VERSION"
+echo "-----> Installing Swift $SWIFT_VERSION"
 cd $BUILD_DIR
-curl $SWIFT_URL -s -O
+curl $SWIFT_URL -O
 mkdir -p vendor/swift
 tar -C vendor/swift -xvf swift-$SWIFT_VERSION-RELEASE-ubuntu14.04.tar.gz
 mv vendor/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu14.04/* vendor/swift
@@ -47,13 +47,13 @@ rmdir vendor/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu14.04
 rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu14.04.tar.gz
 
 export PATH=$BUILD_DIR/vendor/swift/usr/bin:"${PATH}"
-echo "Swift installed"
+echo "-----> Swift installed"
 
 # Build application
-echo "Building application"
+echo "-----> Building application"
 cd $BUILD_DIR
 swift build -c release --build-path $BUILD_DIR/build
 mv $BUILD_DIR/build/release/* $BUILD_DIR
 rmdir $BUILD_DIR/build/release/
-echo "Application built successfully"
+echo "-----> Application built successfully"
 

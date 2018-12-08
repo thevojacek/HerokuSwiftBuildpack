@@ -41,7 +41,7 @@ echo "-----> Clang installed"
 # Install Swift
 echo "-----> Installing Swift $SWIFT_VERSION"
 
-if ! [ -d "$CACHE_DIR/vendor/swift/bin" ]; then
+if ! [ -d "$CACHE_DIR/vendor/swift/usr/bin" ]; then
     cd $CACHE_DIR
     wget --quiet $SWIFT_URL
     mkdir -p vendor/swift

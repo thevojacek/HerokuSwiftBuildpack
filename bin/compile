@@ -71,7 +71,7 @@ swift build $SWIFT_BUILD_FLAGS --configuration "$SWIFT_BUILD_CONFIGURATION" --bu
 # Installing libraries
 cd $BUILD_DIR
 mkdir -p $BUILD_DIR/.swift-lib
-cp $CACHE_DIR/libs/swift/usr/lib/swift/linux*.so $BUILD_DIR/.swift-lib
+cp $CACHE_DIR/libs/swift/usr/lib/swift/linux/*.so $BUILD_DIR/.swift-lib
 find "$SWIFT_BUILD_PATH/$SWIFT_BUILD_CONFIGURATION/" -name '*.so' -type f -exec cp {} $BUILD_DIR/.swift-lib \;
 find "$SWIFT_BUILD_PATH/$SWIFT_BUILD_CONFIGURATION/" ! -name '*.so' -type f -perm /a+x -exec cp {} $BUILD_DIR \;
 

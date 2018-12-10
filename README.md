@@ -18,7 +18,7 @@ cat .swift-version
 4.2.1
 ```
 
-All you need to do is just to add the buildpack to your Heroku application and push a new release like so:
+**All you need to do is just to add the buildpack to your Heroku application and push a new release like so:**
 
 ```shell
 heroku buildpacks:set https://github.com/thevojacek/HerokuSwiftBuildpack.git

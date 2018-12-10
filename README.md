@@ -1,6 +1,7 @@
 # Heroku Swift Buildpack
 
 This is a simple and straightforward buildpack for Heroku cloud environment to deploy your Swift applications with ease!
+This buildpacks automatically install specified version of Swift and Clang and builds your application!
 
 ## Compatibility
 
@@ -8,21 +9,48 @@ Currently, this buildpack is tested and working on a newest heroku stack, "**her
 
 If you need to upgrade your Heroku stack, there is an easy to follow [tutorial](https://devcenter.heroku.com/articles/upgrading-to-the-latest-stack) on Heroku's website.
 
+**It only works with Swift application which are using Swift Package Manager.** So your app will be detected and buildpack used only if your app contains **Package.swift** file in it's root directory.
+
 ## Usage
+
+### Specify a Swift version
 You may, specify a specific release of Swift you want to install by including **.swift-version** file in the home directory of your app. If you don't specify a version, it defaults to the "**4.2.1**" release at the moment.
 
 ```shell
+$ ls -la
 -rw-r--r--@  1 name  staff    41B  6 pro 19:48 .gitignore
 -rw-r--r--@  1 name  staff     5B  7 pro 17:14 .swift-version
-cat .swift-version
+...
+
+$ cat .swift-version
 4.2.1
 ```
 
+### Procfile
+Also, you **must** specify a Procfile for Heroku to determine, which process you want to run. Name of the process should equal to target name specified in your **Package.swift** file.
+
+```shell
+$ ls -la
+-rw-r--r--@  1 name  staff   681B 10 pro 19:26 Package.swift
+-rw-r--r--@  1 name  staff    21B  9 pro 15:25 Procfile
+...
+
+$ cat Procfile
+web: ./Application
+```
+
+### Example usage
 **All you need to do is just to add the buildpack to your Heroku application and push a new release like so:**
 
 ```shell
-heroku buildpacks:set https://github.com/thevojacek/HerokuSwiftBuildpack.git
-git push heroku master
+$ ls
+Procfile Package.swift Sources
+...
+
+$ heroku buildpacks:set https://github.com/thevojacek/HerokuSwiftBuildpack.git
+
+$ git push heroku master
+...
 ```
 
 ## License

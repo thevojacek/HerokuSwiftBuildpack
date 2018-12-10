@@ -51,7 +51,7 @@ installSwift() {
         wget --quiet $SWIFT_URL
         mkdir -p libs/swift_$SWIFT_VERSION
         tar -C libs/swift_$SWIFT_VERSION -xvf swift-_$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
-        mv libs/swift_$SWIFT_VERSION/swift-_$SWIFT_VERSION-RELEASE-ubuntu18.04/* libs/swift_$SWIFT_VERSION
+        mv libs/swift_$SWIFT_VERSION/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04/* libs/swift_$SWIFT_VERSION
         rmdir libs/swift_$SWIFT_VERSION/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04
         rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
     fi

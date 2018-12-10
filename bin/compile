@@ -39,7 +39,7 @@ remove() {
 getSwiftVersion() {
     if [ -f $BUILD_DIR/.swift-version ]; then
         echo "Swift version file found."
-        $SWIFT_VERSION=$(cat $BUILD_DIR/.swift-version)
+        SWIFT_VERSION=$(cat $BUILD_DIR/.swift-version)
         echo $SWIFT_VERSION
     fi
 }

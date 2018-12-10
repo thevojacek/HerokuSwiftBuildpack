@@ -1,7 +1,7 @@
 # Heroku Swift Buildpack
 
 This is a simple and straightforward buildpack for Heroku cloud environment to deploy your Swift applications with ease!
-This buildpacks automatically install specified version of Swift and Clang and builds your application!
+This buildpacks automatically installs specified version of Swift and Clang and builds your application for Heroku environment!
 
 ## Compatibility
 
@@ -9,7 +9,7 @@ Currently, this buildpack is tested and working on a newest heroku stack, "**her
 
 If you need to upgrade your Heroku stack, there is an easy to follow [tutorial](https://devcenter.heroku.com/articles/upgrading-to-the-latest-stack) on Heroku's website.
 
-**It only works with Swift application which are using Swift Package Manager.** So your app will be detected and buildpack used only if your app contains **Package.swift** file in it's root directory.
+**It only works with Swift applications, which are using Swift Package Manager.** So your app will be detected and buildpack used only if your app contains **Package.swift** file in it's root directory.
 
 ## Usage
 

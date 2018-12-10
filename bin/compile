@@ -24,56 +24,9 @@ SWIFT_BUILD_PATH="$CACHE_DIR/.build"
 
 # Set evn helper function definition
 setEnv() {
-  PROFILE_PATH="$BUILD_DIR/.profile.d/swift.sh"
-  echo "export $1=$2" >> $PROFILE_PATH
+    PROFILE_PATH="$BUILD_DIR/.profile.d/swift.sh"
+    echo "export $1=$2" >> $PROFILE_PATH
 }
-
-# Create cache directory
-mkdir -p "$CACHE_DIR"
-
-# Install Swift
-echo "-----> Installing Swift $SWIFT_VERSION"
-
-if ! [ -d "$CACHE_DIR/libs/swift/usr/bin" ]; then
-    cd $CACHE_DIR
-    wget --quiet $SWIFT_URL
-    mkdir -p libs/swift
-    tar -C libs/swift -xvf swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
-    mv libs/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04/* libs/swift
-    rmdir libs/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04
-    rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
-fi
-
-export PATH="$CACHE_DIR/libs/swift/usr/bin:$PATH"
-echo "-----> Swift installed"
-
-# Install Clang
-echo "-----> Installing Clang $C_LANG_VERSION"
-
-if ! [ -d "$CACHE_DIR/libs/clang/bin" ]; then
-    cd $CACHE_DIR
-    wget --quiet $C_LANG_URL
-    mkdir -p libs/clang
-    tar -C libs/clang -xvf clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz
-    mv libs/clang/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04/* libs/clang
-    rmdir libs/clang/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04
-    rm -f clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz
-fi
-
-export PATH=$CACHE_DIR/libs/clang/bin:"${PATH}"
-echo "-----> Clang installed"
-
-# Build application
-echo "-----> Building application"
-cd $BUILD_DIR
-swift build $SWIFT_BUILD_FLAGS --configuration "$SWIFT_BUILD_CONFIGURATION" --build-path "$SWIFT_BUILD_PATH"
-
-# Installing libraries
-cd $BUILD_DIR
-mkdir -p $BUILD_DIR/.swift-lib
-cp $CACHE_DIR/libs/swift/usr/lib/swift/linux/*.so $BUILD_DIR/.swift-lib
-find "$SWIFT_BUILD_PATH/$SWIFT_BUILD_CONFIGURATION/" -name '*.so' -type f -exec cp {} $BUILD_DIR/.swift-lib \;
-find "$SWIFT_BUILD_PATH/$SWIFT_BUILD_CONFIGURATION/" ! -name '*.so' -type f -perm /a+x -exec cp {} $BUILD_DIR \;
 
 # Remove unnecessary files
 remove() {
@@ -82,11 +35,76 @@ remove() {
   fi
 }
 
-cd $BUILD_DIR
-remove "$BUILD_DIR/Package.swift"
-remove "$BUILD_DIR/Package.resolved"
-remove "$BUILD_DIR/Sources"
-remove "$BUILD_DIR/Tests"
+# Install Swift
+installSwift() {
+    echo "-----> Installing Swift $SWIFT_VERSION"
+
+    if ! [ -d "$CACHE_DIR/libs/swift/usr/bin" ]; then
+        cd $CACHE_DIR
+        wget --quiet $SWIFT_URL
+        mkdir -p libs/swift
+        tar -C libs/swift -xvf swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
+        mv libs/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04/* libs/swift
+        rmdir libs/swift/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04
+        rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
+    fi
+
+    export PATH="$CACHE_DIR/libs/swift/usr/bin:$PATH"
+    echo "-----> Swift installed"
+}
+
+
+# Install Clang
+installClang() {
+    echo "-----> Installing Clang $C_LANG_VERSION"
+
+    if ! [ -d "$CACHE_DIR/libs/clang/bin" ]; then
+        cd $CACHE_DIR
+        wget --quiet $C_LANG_URL
+        mkdir -p libs/clang
+        tar -C libs/clang -xvf clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz
+        mv libs/clang/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04/* libs/clang
+        rmdir libs/clang/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04
+        rm -f clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz
+    fi
+
+    export PATH=$CACHE_DIR/libs/clang/bin:"${PATH}"
+    echo "-----> Clang installed"
+}
+
+# Build application
+buildApp() {
+    echo "-----> Building application"
+    cd $BUILD_DIR
+    swift build $SWIFT_BUILD_FLAGS --configuration "$SWIFT_BUILD_CONFIGURATION" --build-path "$SWIFT_BUILD_PATH"
+}
+
+# Installing libraries
+linkSwiftLibraries() {
+    cd $BUILD_DIR
+    mkdir -p $BUILD_DIR/.swift-lib
+    cp $CACHE_DIR/libs/swift/usr/lib/swift/linux/*.so $BUILD_DIR/.swift-lib
+    find "$SWIFT_BUILD_PATH/$SWIFT_BUILD_CONFIGURATION/" -name '*.so' -type f -exec cp {} $BUILD_DIR/.swift-lib \;
+    find "$SWIFT_BUILD_PATH/$SWIFT_BUILD_CONFIGURATION/" ! -name '*.so' -type f -perm /a+x -exec cp {} $BUILD_DIR \;
+}
+
+removeUnnecessaryFiles() {
+    cd $BUILD_DIR
+    remove "$BUILD_DIR/Package.swift"
+    remove "$BUILD_DIR/Package.resolved"
+    remove "$BUILD_DIR/Sources"
+    remove "$BUILD_DIR/Tests"
+}
+
+# Create cache directory
+mkdir -p "$CACHE_DIR"
+
+# Start building process
+installSwift
+installClang
+buildApp
+linkSwiftLibraries
+removeUnnecessaryFiles
 
 # Setup application environment
 mkdir -p $BUILD_DIR/.profile.d

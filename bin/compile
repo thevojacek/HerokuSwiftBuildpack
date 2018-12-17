@@ -39,6 +39,7 @@ remove() {
 getSwiftVersion() {
     if [ -f $BUILD_DIR/.swift-version ]; then
         SWIFT_VERSION=$(cat $BUILD_DIR/.swift-version)
+        SWIFT_URL="https://swift.org/builds/swift-$SWIFT_VERSION-release/ubuntu1804/swift-$SWIFT_VERSION-RELEASE/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz"
     fi
 }
 

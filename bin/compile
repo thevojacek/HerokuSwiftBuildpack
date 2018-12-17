@@ -15,7 +15,7 @@ SWIFT_VERSION="4.2.1"
 C_LANG_VERSION="7.0.0"
 
 # Downloads URLs
-SWIFT_URL="https://swift.org/builds/swift-$SWIFT_VERSION-release/ubuntu1804/swift-$SWIFT_VERSION-RELEASE/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz"
+SWIFT_URL="https://swift.org/builds/swift-$SWIFT_VERSION-release/ubuntu1604/swift-$SWIFT_VERSION-RELEASE/swift-$SWIFT_VERSION-RELEASE-ubuntu16.04.tar.gz"
 C_LANG_URL="http://llvm.org/releases/$C_LANG_VERSION/clang+llvm-$C_LANG_VERSION-x86_64-linux-gnu-ubuntu-16.04.tar.xz"
 
 # Build settings
@@ -39,7 +39,7 @@ remove() {
 getSwiftVersion() {
     if [ -f $BUILD_DIR/.swift-version ]; then
         SWIFT_VERSION=$(cat $BUILD_DIR/.swift-version)
-        SWIFT_URL="https://swift.org/builds/swift-$SWIFT_VERSION-release/ubuntu1804/swift-$SWIFT_VERSION-RELEASE/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz"
+        SWIFT_URL="https://swift.org/builds/swift-$SWIFT_VERSION-release/ubuntu1604/swift-$SWIFT_VERSION-RELEASE/swift-$SWIFT_VERSION-RELEASE-ubuntu16.04.tar.gz"
     fi
 }
 
@@ -51,10 +51,10 @@ installSwift() {
         cd $CACHE_DIR
         wget --quiet $SWIFT_URL
         mkdir -p libs/swift_$SWIFT_VERSION
-        tar -C libs/swift_$SWIFT_VERSION -xvf swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
-        mv libs/swift_$SWIFT_VERSION/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04/* libs/swift_$SWIFT_VERSION
-        rmdir libs/swift_$SWIFT_VERSION/swift-$SWIFT_VERSION-RELEASE-ubuntu18.04
-        rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu18.04.tar.gz
+        tar -C libs/swift_$SWIFT_VERSION -xvf swift-$SWIFT_VERSION-RELEASE-ubuntu16.04.tar.gz
+        mv libs/swift_$SWIFT_VERSION/swift-$SWIFT_VERSION-RELEASE-ubuntu16.04/* libs/swift_$SWIFT_VERSION
+        rmdir libs/swift_$SWIFT_VERSION/swift-$SWIFT_VERSION-RELEASE-ubuntu16.04
+        rm -f swift-$SWIFT_VERSION-RELEASE-ubuntu16.04.tar.gz
     fi
 
     export PATH="$CACHE_DIR/libs/swift_$SWIFT_VERSION/usr/bin:$PATH"

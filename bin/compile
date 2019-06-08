@@ -43,6 +43,18 @@ getSwiftVersion() {
     fi
 }
 
+# Install GIT
+# Install GIT if status of "git --version" is not 0
+installGit() {
+    echo "-----> Installing GIT"
+    git --version
+
+    if [ $? -ne 0 ]; then
+        apt update
+        apt install git
+    fi
+}
+
 # Install Swift
 installSwift() {
     echo "-----> Installing Swift $SWIFT_VERSION"
@@ -80,6 +92,17 @@ installClang() {
     echo "-----> Clang installed"
 }
 
+# Install mongoc driver
+installMongoC() {
+    echo "-----> Installing mongoc driver"
+
+    if ! [ -d "$CACHE_DIR/libs/mongoc" ]; then
+        cd $CACHE_DIR
+        wget --quiet $C_LANG_URL
+        mkdir -p libs/mongoc
+    fi
+}
+
 # Build application
 buildApp() {
     echo "-----> Building application"
@@ -109,6 +132,7 @@ removeUnnecessaryFiles() {
 mkdir -p "$CACHE_DIR"
 
 # Start building process
+installGit
 getSwiftVersion
 installSwift
 installClang
